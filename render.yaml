@@ -1,0 +1,41 @@
+# Render.com blueprint. Logs written to stdout/stderr are captured automatically
+# and viewable in the Render dashboard (Service -> Logs) and via `render logs`.
+services:
+  - type: web
+    name: whatsapp-webhook-service
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: MONGO_URI
+        sync: false
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false
+      - key: WHATSAPP_BUSINESS_ACCOUNT_ID
+        sync: false
+      - key: WHATSAPP_APP_ID
+        sync: false
+      - key: WHATSAPP_APP_SECRET
+        sync: false
+      - key: WHATSAPP_ACCESS_TOKEN
+        sync: false
+      - key: WHATSAPP_VERIFY_TOKEN
+        sync: false
+      - key: MINIO_ENDPOINT
+        value: play.min.io
+      - key: MINIO_PORT
+        value: 443
+      - key: MINIO_USE_SSL
+        value: true
+      - key: MINIO_ACCESS_KEY
+        sync: false
+      - key: MINIO_SECRET_KEY
+        sync: false
+      - key: MINIO_BUCKET
+        value: whatsapp-media
