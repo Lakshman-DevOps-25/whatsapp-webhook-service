@@ -21,6 +21,8 @@ const messageSchema = new Schema(
     mediaBucket: { type: String },
     mediaObjectPath: { type: String }, // e.g. inbound/<wamid>.jpg
     mediaUrl: { type: String }, // presigned MinIO URL
+    mediaError: { type: String }, // set if media download/upload failed
+    sendError: { type: String }, // set if the WhatsApp send call failed
 
     status: { type: String }, // outbound status: sent | delivered | read | failed
     timestamp: { type: Date },

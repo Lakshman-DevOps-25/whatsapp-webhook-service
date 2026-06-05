@@ -53,18 +53,35 @@ async function handleInboundMessage(value, message) {
 
   if (isMediaType(message.type)) {
     const mediaObj = message[message.type]; // { id, mime_type, caption? }
-    const meta = await whatsAppService.getMediaMeta(mediaObj.id); // { url, mime_type }
-    const { buffer } = await whatsAppService.downloadMedia(meta.url);
-    const stored = await storageService.uploadInbound(message.id || mediaObj.id, buffer, meta.mime_type || mediaObj.mime_type);
-    return messageService.save({
-      ...base,
-      text: mediaObj.caption,
-      mediaId: mediaObj.id,
-      mimeType: meta.mime_type || mediaObj.mime_type,
-      mediaBucket: stored.bucket,
-      mediaObjectPath: stored.objectName,
-      mediaUrl: stored.url,
-    });
+    try {
+      const meta = await whatsAppService.getMediaMeta(mediaObj.id); // { url, mime_type }
+      const { buffer } = await whatsAppService.downloadMedia(meta.url);
+      const mimeType = meta.mime_type || mediaObj.mime_type;
+      const stored = await storageService.uploadInbound(message.id || mediaObj.id, buffer, mimeType);
+      return messageService.save({
+        ...base,
+        text: mediaObj.caption,
+        mediaId: mediaObj.id,
+        mimeType,
+        mediaBucket: stored.bucket,
+        mediaObjectPath: stored.objectName,
+        mediaUrl: stored.url,
+      });
+    } catch (err) {
+      // Do NOT silently drop the media: log loudly and still record the message
+      // (with the error) so there is a MongoDB trail to debug against.
+      logger.error(
+        { error: err.message, mediaId: mediaObj.id, waMessageId: message.id, type: message.type },
+        'Inbound media download/upload failed'
+      );
+      return messageService.save({
+        ...base,
+        text: mediaObj.caption,
+        mediaId: mediaObj.id,
+        mimeType: mediaObj.mime_type,
+        mediaError: err.message,
+      });
+    }
   }
 
   // Unsupported type — still record it for visibility.
@@ -85,13 +102,19 @@ async function receive(req, res) {
 
   try {
     for (const value of extractValues(body)) {
-      // Inbound messages
+      // Inbound messages — isolate each so one failure doesn't drop the rest.
       for (const message of value.messages || []) {
-        await handleInboundMessage(value, message);
+        try {
+          await handleInboundMessage(value, message);
+        } catch (err) {
+          logger.error({ error: err.message, waMessageId: message.id }, 'Failed processing inbound message');
+        }
       }
       // Outbound delivery statuses (sent/delivered/read/failed)
       for (const status of value.statuses || []) {
-        await messageService.updateStatusByWaId(status.id, status.status);
+        await messageService.updateStatusByWaId(status.id, status.status).catch((e) =>
+          logger.error({ error: e.message, waMessageId: status.id }, 'Failed updating status')
+        );
       }
     }
   } catch (err) {

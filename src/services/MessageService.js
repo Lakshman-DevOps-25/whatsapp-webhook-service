@@ -27,6 +27,11 @@ class MessageService {
     return Message.findOneAndUpdate({ waMessageId, direction: 'outbound' }, { status }, { new: true });
   }
 
+  async updateById(id, fields) {
+    logger.info({ collection: 'messages', id, status: fields.status }, 'Updating message in MongoDB');
+    return Message.findByIdAndUpdate(id, fields, { new: true });
+  }
+
   list(filter = {}, limit = 100) {
     return Message.find(filter).sort({ createdAt: -1 }).limit(limit).lean();
   }

@@ -29,6 +29,8 @@ const config = {
     appSecret: process.env.WHATSAPP_APP_SECRET || '',
     accessToken: process.env.WHATSAPP_ACCESS_TOKEN || '',
     verifyToken: process.env.WHATSAPP_VERIFY_TOKEN || '',
+    // Meta requires a non-empty User-Agent on media download requests.
+    mediaUserAgent: process.env.WHATSAPP_MEDIA_USER_AGENT || 'whatsapp-webhook-service/1.0',
   },
 
   token: {

@@ -54,17 +54,27 @@ class WhatsAppService {
   // Resolve a media id to its temporary download URL + mime type.
   async getMediaMeta(mediaId) {
     const { token } = await this._context();
-    const res = await fetch(`${this.baseUrl()}/${mediaId}`, { headers: { Authorization: `Bearer ${token}` } });
+    // Meta requires a User-Agent on ALL media-related requests; without it the
+    // endpoint returns 400. This is why inbound media downloads were failing.
+    const res = await fetch(`${this.baseUrl()}/${mediaId}`, {
+      headers: { Authorization: `Bearer ${token}`, 'User-Agent': this.wa.mediaUserAgent },
+    });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error('getMediaMeta failed: ' + JSON.stringify(data.error || data));
+    if (!res.ok) throw new Error(`getMediaMeta failed (${res.status}): ` + JSON.stringify(data.error || data));
     return data; // { url, mime_type, sha256, file_size, id }
   }
 
-  // Download binary media from a Graph media URL (requires the bearer token).
+  // Download binary media from a Graph media URL. Requires BOTH the bearer token
+  // and a User-Agent header (Meta rejects header-less requests with 400).
   async downloadMedia(mediaUrl) {
     const { token } = await this._context();
-    const res = await fetch(mediaUrl, { headers: { Authorization: `Bearer ${token}` } });
-    if (!res.ok) throw new Error('downloadMedia failed: ' + res.status);
+    const res = await fetch(mediaUrl, {
+      headers: { Authorization: `Bearer ${token}`, 'User-Agent': this.wa.mediaUserAgent },
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => '');
+      throw new Error(`downloadMedia failed (${res.status}): ${text.slice(0, 200)}`);
+    }
     const arrayBuffer = await res.arrayBuffer();
     const contentType = res.headers.get('content-type') || 'application/octet-stream';
     return { buffer: Buffer.from(arrayBuffer), contentType };
