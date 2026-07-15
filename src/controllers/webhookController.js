@@ -10,32 +10,19 @@ const configService = require('../services/ConfigService');
 
 // GET /webhook — Meta verification handshake.
 async function verify(req, res) {
-  const mode = req.query['hub.mode'];
-  const token = req.query['hub.verify_token'];
-  const challenge = req.query['hub.challenge'];
+  const mode = req.query["hub.mode"];
+  const token = req.query["hub.verify_token"];
+  const challenge = req.query["hub.challenge"];
 
-  // Check against your specific .env variable
-  if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
-    // Crucial: Send back ONLY the raw challenge string
-    return res.status(200).set('Content-Type', 'text/plain').send(challenge);
-  } 
-  
-  return res.sendStatus(403);
+  const VERIFY_TOKEN = "whatsap-webhook";
 
-  // Compare against the env verify token (fall back to the stored config).
-  let expected = config.whatsapp.verifyToken;
-  try {
-    const doc = await configService.getActive();
-    expected = doc.verifyToken || expected;
-  } catch (_) {
-    /* config may not be bootstrapped yet; use env value */
+  if (mode === "subscribe" && token === VERIFY_TOKEN) {
+      console.log("Webhook verified");
+      return res
+          .status(200)
+          .type("text/plain")
+          .send(challenge);
   }
-
-  if (mode === 'subscribe' && token && token === expected) {
-    logger.info('Webhook verification succeeded');
-    return res.status(200).send(challenge);
-  }
-  logger.warn('Webhook verification failed');
   return res.sendStatus(403);
 }
 
