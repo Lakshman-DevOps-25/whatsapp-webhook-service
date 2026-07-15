@@ -14,6 +14,14 @@ async function verify(req, res) {
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];
 
+  // Check against your specific .env variable
+  if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
+    // Crucial: Send back ONLY the raw challenge string
+    return res.status(200).set('Content-Type', 'text/plain').send(challenge);
+  } 
+  
+  return res.sendStatus(403);
+
   // Compare against the env verify token (fall back to the stored config).
   let expected = config.whatsapp.verifyToken;
   try {
