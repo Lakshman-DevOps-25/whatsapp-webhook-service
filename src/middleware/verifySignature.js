@@ -24,7 +24,7 @@ module.exports = function verifySignature(req, res, next) {
   if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) {
     logger.warn('Invalid webhook signature — rejecting request');
     console.log('req-', req, ' ==== signature-256-', req.get('x-hub-signature-256') );
-    return res.status(401).json({ error: 'invalid signature == ', req});
+    return res.status(401).json({ error: 'invalid signature'});
   }
   return next();
 };
