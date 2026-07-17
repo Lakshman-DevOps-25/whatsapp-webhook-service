@@ -100,6 +100,8 @@ async function receive(req, res) {
       // Inbound messages — isolate each so one failure doesn't drop the rest.
       for (const message of value.messages || []) {
         try {
+          console.log("Message: ", message);
+          console.log("Value: ", value);
           await handleInboundMessage(value, message);
         } catch (err) {
           logger.error({ error: err.message, waMessageId: message.id }, 'Failed processing inbound message');
