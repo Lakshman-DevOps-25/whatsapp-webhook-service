@@ -25,6 +25,8 @@ class WhatsAppService {
 
   // Send a plain text message. Returns the WhatsApp API response.
   async sendText(to, body) {
+    console.log("to: ", to);
+    console.log("Body: ", body);
     const { token, phoneNumberId } = await this._context();
     const res = await fetch(`${this.baseUrl()}/${phoneNumberId}/messages`, {
       method: 'POST',
