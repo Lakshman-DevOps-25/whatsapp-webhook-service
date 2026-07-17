@@ -42,9 +42,19 @@ class WhatsAppService {
     //try {
       const res = await fetch("https://graph.facebook.com/v23.0/1023074700896441/messages", {
         method: 'POST',
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body } }),
+        headers: { Authorization: 'Bearer EAANHKRwWrnQBR8P3OT98J0JjRZA3gmk33A0rSI8te5dr3vZBNdmaN6FUj8nHnb6ExCYbVfP5MEXWJYDgvDdJfsCpXDLdJSWMIJzh2W8vxW43RSGxuTrzZASvGY9iDELpyd2BWZCRNU75FtzjV8EVJ5FfkZCJHI3fAu5sPJ3Fc9uszltMBD7mKymK9GWWc0SJlZBxsLmZAa2dZAGeFJhLfnQFyvyGZCepZAH70Oq7BcN2G5tW7c0yYOPA8ZAyjWkOH6RrSBZA8ipyPLm7t6J142l01Oq8OAZDZD', 
+                    'Content-Type': 'application/json' },
+        body: {
+                "messaging_product": "whatsapp",
+                "to": "918331882058",
+                "type": "text",
+                "text": {
+                    "body": "Hello from OAuth token 4"
+                }
+            }
+        //body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body } }),
       });
+      console.log("Res: ", res);
     //} catch {
       
     //}
