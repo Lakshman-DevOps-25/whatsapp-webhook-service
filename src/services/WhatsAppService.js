@@ -95,10 +95,10 @@ class WhatsAppService {
               body
           }
       };
+    console.log("Whatsapp URL: ", `${this.baseUrl()}/${phoneNumberId}/messages`);
     const res = await fetch(`${this.baseUrl()}/${phoneNumberId}/messages`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-      //body: { messaging_product: 'whatsapp', to, type: 'text', text: { body } },
       body: JSON.stringify(payload)
     });
     console.log("Res: ", res);
