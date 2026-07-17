@@ -57,6 +57,7 @@ class WhatsAppService {
       });
       */
 
+      /*
       const payload = {
           messaging_product: "whatsapp",
           to,
@@ -80,6 +81,8 @@ class WhatsAppService {
           }
       );
       console.log("Res: ", res);
+      */
+      
     //} catch {
       
     //}
@@ -87,16 +90,15 @@ class WhatsAppService {
     if (!res.ok) throw new Error('sendText failed: ' + JSON.stringify(data.error || data));
     return data;
 
-    /*
     const res = await fetch(`${this.baseUrl()}/${phoneNumberId}/messages`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body } }),
     });
+    console.log("Res: ", res);
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error('sendText failed: ' + JSON.stringify(data.error || data));
     return data;
-    */
   }
 
   // Send media by public link (e.g. a presigned MinIO URL).
