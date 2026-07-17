@@ -97,9 +97,11 @@ class WhatsAppService {
       };
       
       console.log("Payload:", JSON.stringify(payload, null, 2));
+
+      console.log("Whatsapp URL: ", `${this.baseUrl()}/${phoneNumberId}/messages`);
       
       const res = await fetch(
-          `${this.baseUrl()}/${phoneNumberId}/messages`,
+          "https://graph.facebook.com/v25.0/1023074700896441/messages",
           {
               method: "POST",
               headers: {
