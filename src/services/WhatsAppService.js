@@ -95,6 +95,31 @@ class WhatsAppService {
               body
           }
       };
+      
+      console.log("Payload:", JSON.stringify(payload, null, 2));
+      
+      const res = await fetch(
+          `${this.baseUrl()}/${phoneNumberId}/messages`,
+          {
+              method: "POST",
+              headers: {
+                  Authorization: `Bearer ${token.trim()}`,
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(payload)
+          }
+      );
+      console.log("Res: ", res);
+
+    /*
+    const payload = {
+          messaging_product: "whatsapp",
+          to,
+          type: "text",
+          text: {
+              body
+          }
+      };
     console.log("Whatsapp URL: ", `${this.baseUrl()}/${phoneNumberId}/messages`);
     const res = await fetch(`${this.baseUrl()}/${phoneNumberId}/messages`, {
       method: 'POST',
@@ -102,6 +127,8 @@ class WhatsAppService {
       body: JSON.stringify(payload)
     });
     console.log("Res: ", res);
+    */
+    
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error('sendText failed: ' + JSON.stringify(data.error || data));
     return data;
