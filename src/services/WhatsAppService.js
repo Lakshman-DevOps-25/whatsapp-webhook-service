@@ -82,7 +82,7 @@ class WhatsAppService {
           }
       );
       console.log("Res: ", res);
-      
+      console.log("Res.text Value: ", await res.text());
       
     //} catch {
       
