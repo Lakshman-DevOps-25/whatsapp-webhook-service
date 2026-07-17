@@ -77,7 +77,8 @@ class WhatsAppService {
                   Authorization: `Bearer EAANHKRwWrnQBRyUM1Rzet15wjW8bv3ZCZC9e92LQfvQAfZBr8TGuvei7n3cLv4sLQW3qkWUG51jW4247vnvd7uwZAEQ5qGPGbmHkCTcMqklaxZBLeuA2hajvCSvreRFq9NbsckHZBcLalOBAPziQ9Gea4aHFpA2iyUtJAuC7bot9skJmwVajoSo17poBfjW7vzs3e21ILZA8bpnEGrLZCPZApCqTRONYmZB9Gq0DZClcBdB3EKiNZA01zXs5cVZBSecxpsxEZALYuAtmokEUcJVKdBcNW6`,
                   "Content-Type": "application/json"
               },
-              body: JSON.stringify(payload)
+              //body: JSON.stringify(payload)
+              body: payload,
           }
       );
       console.log("Res: ", res);
