@@ -28,6 +28,11 @@ class WhatsAppService {
     console.log("to: ", to);
     console.log("Body: ", body);
     const { token, phoneNumberId } = await this._context();
+
+    console.log("baseUrl: ", this.baseUrl(),"/",phoneNumberId,"/messages");
+    console.log("headers: Authorization: Bearer ", token, " -- Content-Type: 'application/json'");
+    console.log("body: ", JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body } }));
+    
     const res = await fetch(`${this.baseUrl()}/${phoneNumberId}/messages`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
