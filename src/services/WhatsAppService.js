@@ -57,7 +57,7 @@ class WhatsAppService {
       });
       */
 
-      /*
+      
       const payload = {
           messaging_product: "whatsapp",
           to,
@@ -81,12 +81,12 @@ class WhatsAppService {
           }
       );
       console.log("Res: ", res);
-      */
+      
       
     //} catch {
       
     //}
-
+    /*
     const payload = {
           messaging_product: "whatsapp",
           to,
@@ -112,7 +112,7 @@ class WhatsAppService {
           }
       );
       console.log("Res: ", res);
-
+      */
     /*
     const payload = {
           messaging_product: "whatsapp",
