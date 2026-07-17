@@ -20,6 +20,12 @@ class WhatsAppService {
     const doc = await configService.getActive();
     await tokenManager.ensureFresh(doc);
     const fresh = await configService.getActive();
+    
+    console.log("token: ", fresh.accessToken, " -- phoneNumberId: ", fresh.phoneNumberId);
+    console.log("Phone Number ID:", "1023074700896441");
+    console.log("Token prefix:", fresh.accessToken.substring(0, 20));
+    console.log("Token length:", fresh.accessToken.length);
+    
     return { token: fresh.accessToken, phoneNumberId: fresh.phoneNumberId };
   }
 
@@ -43,7 +49,7 @@ class WhatsAppService {
       
     //}
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error('sendMediaByLink failed: ' + JSON.stringify(data.error || data));
+    if (!res.ok) throw new Error('sendText failed: ' + JSON.stringify(data.error || data));
     return data;
 
     /*
