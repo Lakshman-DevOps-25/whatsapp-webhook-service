@@ -40,6 +40,7 @@ class WhatsAppService {
     console.log("body: ", JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body } }));
 
     //try {
+    /*
       const res = await fetch("https://graph.facebook.com/v23.0/1023074700896441/messages", {
         method: 'POST',
         headers: { Authorization: 'Bearer EAANHKRwWrnQBRybTFQsT4CIW9XKWEiXBVOUEfZBmWruuAZC87s2FbBayeX7bwFtpkSKlWYPr4pncOZAdnaW5OXclavwBzsnMjJyDwRbhW8ieViR4O9B2VJYYiZCD8IX8jUCZAQzrluZCNIRxZAKi18bvsPnTtu3yLobW61rkSGseBO3Dn4hrx7ZAdIL28MWW4AXdnh1r8xqtTHeJrsIaAqNyYJsS6flLea52U0aZAfGq3kHqBuiQQ7pzerQMXA6iwef9HzSO7DaeKClPBJYlfWJny', 
@@ -54,6 +55,30 @@ class WhatsAppService {
             }
         //body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body } }),
       });
+      */
+
+      const payload = {
+          messaging_product: "whatsapp",
+          to,
+          type: "text",
+          text: {
+              body
+          }
+      };
+      
+      console.log("Payload:", JSON.stringify(payload, null, 2));
+      
+      const res = await fetch(
+          `https://graph.facebook.com/v25.0/1023074700896441/messages`,
+          {
+              method: "POST",
+              headers: {
+                  Authorization: `Bearer EAANHKRwWrnQBRybTFQsT4CIW9XKWEiXBVOUEfZBmWruuAZC87s2FbBayeX7bwFtpkSKlWYPr4pncOZAdnaW5OXclavwBzsnMjJyDwRbhW8ieViR4O9B2VJYYiZCD8IX8jUCZAQzrluZCNIRxZAKi18bvsPnTtu3yLobW61rkSGseBO3Dn4hrx7ZAdIL28MWW4AXdnh1r8xqtTHeJrsIaAqNyYJsS6flLea52U0aZAfGq3kHqBuiQQ7pzerQMXA6iwef9HzSO7DaeKClPBJYlfWJny`,
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(payload)
+          }
+      );
       console.log("Res: ", res);
     //} catch {
       
