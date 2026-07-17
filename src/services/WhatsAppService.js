@@ -86,9 +86,6 @@ class WhatsAppService {
     //} catch {
       
     //}
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error('sendText failed: ' + JSON.stringify(data.error || data));
-    return data;
 
     const res = await fetch(`${this.baseUrl()}/${phoneNumberId}/messages`, {
       method: 'POST',
