@@ -39,6 +39,31 @@ class WhatsAppService {
     console.log("headers: Authorization: Bearer ", token, " -- Content-Type: 'application/json'");
     console.log("body: ", JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body } }));
 
+    const payload = {
+        messaging_product: "whatsapp",
+        to: "918331882058",
+        type: "text",
+        text: {
+          body: "Hello from Render"
+        }
+      };
+      
+      console.log("Payload:", JSON.stringify(payload));
+      
+      const res = await fetch(
+        "https://graph.facebook.com/v25.0/1023074700896441/messages",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token.trim()}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        }
+      );
+      
+      console.log("Status:", res.status);
+      console.log("Response:", await res.text());
     //try {
     /*
       const res = await fetch("https://graph.facebook.com/v23.0/1023074700896441/messages", {
@@ -57,7 +82,7 @@ class WhatsAppService {
       });
       */
 
-      
+      /*
       const payload = {
           messaging_product: "whatsapp",
           to,
@@ -87,6 +112,7 @@ class WhatsAppService {
     //} catch {
       
     //}
+    */
     /*
     const payload = {
           messaging_product: "whatsapp",
