@@ -103,7 +103,7 @@ class WhatsAppService {
           {
               method: "POST",
               headers: {
-                  Authorization: `Bearer ${token.trim()}`,
+                  Authorization: `Bearer EAANHKRwWrnQBRybTFQsT4CIW9XKWEiXBVOUEfZBmWruuAZC87s2FbBayeX7bwFtpkSKlWYPr4pncOZAdnaW5OXclavwBzsnMjJyDwRbhW8ieViR4O9B2VJYYiZCD8IX8jUCZAQzrluZCNIRxZAKi18bvsPnTtu3yLobW61rkSGseBO3Dn4hrx7ZAdIL28MWW4AXdnh1r8xqtTHeJrsIaAqNyYJsS6flLea52U0aZAfGq3kHqBuiQQ7pzerQMXA6iwef9HzSO7DaeKClPBJYlfWJny`,
                   "Content-Type": "application/json"
               },
               body: JSON.stringify(payload)
