@@ -90,7 +90,7 @@ class WhatsAppService {
     const res = await fetch(`${this.baseUrl()}/${phoneNumberId}/messages`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body } }),
+      body: { messaging_product: 'whatsapp', to, type: 'text', text: { body } },
     });
     console.log("Res: ", res);
     const data = await res.json().catch(() => ({}));
