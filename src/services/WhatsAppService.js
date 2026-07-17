@@ -32,7 +32,21 @@ class WhatsAppService {
     console.log("baseUrl: ", this.baseUrl(),"/",phoneNumberId,"/messages");
     console.log("headers: Authorization: Bearer ", token, " -- Content-Type: 'application/json'");
     console.log("body: ", JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body } }));
-    
+
+    //try {
+      const res = await fetch("https://graph.facebook.com/v23.0/1023074700896441/messages", {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body } }),
+      });
+    //} catch {
+      
+    //}
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error('sendMediaByLink failed: ' + JSON.stringify(data.error || data));
+    return data;
+
+    /*
     const res = await fetch(`${this.baseUrl()}/${phoneNumberId}/messages`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
@@ -41,6 +55,7 @@ class WhatsAppService {
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error('sendText failed: ' + JSON.stringify(data.error || data));
     return data;
+    */
   }
 
   // Send media by public link (e.g. a presigned MinIO URL).
