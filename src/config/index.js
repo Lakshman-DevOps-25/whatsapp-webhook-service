@@ -21,7 +21,7 @@ const config = {
 
   whatsapp: {
     graphBaseUrl: process.env.WHATSAPP_GRAPH_BASE_URL || 'https://graph.facebook.com',
-    apiVersion: process.env.WHATSAPP_API_VERSION || 'v19.0',
+    apiVersion: process.env.WHATSAPP_API_VERSION || 'v25.0',
     phoneNumberId: process.env.WHATSAPP_PHONE_NUMBER_ID || '',
     businessAccountId: process.env.WHATSAPP_BUSINESS_ACCOUNT_ID || '',
     displayName: process.env.WHATSAPP_DISPLAY_NAME || 'WhatsApp Number',
