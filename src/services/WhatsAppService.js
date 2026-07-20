@@ -53,6 +53,16 @@ class WhatsAppService {
       console.log("Base URL: ", this.baseUrl());
     
       console.log("Whatsapp URL: ", `${this.baseUrl()}/${phoneNumberId}/messages`);
+
+      console.log("https://graph.facebook.com/v25.0/1023074700896441/messages",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token.trim()}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
       
       const res = await fetch(
         "https://graph.facebook.com/v25.0/1023074700896441/messages",
