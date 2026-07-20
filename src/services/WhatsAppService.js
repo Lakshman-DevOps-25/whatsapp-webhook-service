@@ -77,7 +77,8 @@ class WhatsAppService {
           body: JSON.stringify(payload)
         }
       );
-      
+
+      console.log("Res: ", res);
       console.log("Status:", res.status);
       console.log("Response:", await res.text());
     //try {
