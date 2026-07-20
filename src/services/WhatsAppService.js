@@ -56,7 +56,7 @@ class WhatsAppService {
     
       console.log("Whatsapp URL: ", `${this.baseUrl()}/${phoneNumberId}/messages`);
 
-      console.log("https://graph.facebook.com/v25.0/1023074700896441/messages",
+      console.log("https://graph.facebook.com/v25.0/1277264628801939/messages",
         {
           method: "POST",
           headers: {
@@ -67,7 +67,7 @@ class WhatsAppService {
         });
       
       const res = await fetch(
-        "https://graph.facebook.com/v25.0/1023074700896441/messages",
+        "https://graph.facebook.com/v25.0/1277264628801939/messages",
         {
           method: "POST",
           headers: {
