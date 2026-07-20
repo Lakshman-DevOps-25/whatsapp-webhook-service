@@ -36,7 +36,23 @@ router.post(
     const { to, type = 'text', text, link, caption } = req.body || {};
     if (!to) throw new HttpError(400, 'recipient "to" is required');
 
+    // const doc = await configService.getActive();
     const doc = await configService.getActive();
+
+    console.log("Before refresh:");
+    console.log(doc.accessToken.substring(0,40));
+
+    await tokenManager.ensureFresh(doc);
+
+    const fresh = await configService.getActive();
+
+    console.log("After refresh:");
+    console.log(fresh.accessToken.substring(0,40));
+
+    console.log(
+        "Same token:",
+        doc.accessToken === fresh.accessToken
+    );
     const record = {
       direction: 'outbound',
       phoneNumberId: doc.phoneNumberId,
