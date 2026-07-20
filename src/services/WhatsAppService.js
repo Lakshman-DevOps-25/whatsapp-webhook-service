@@ -56,7 +56,7 @@ class WhatsAppService {
     
       console.log("Whatsapp URL: ", `${this.baseUrl()}/${phoneNumberId}/messages`);
 
-      console.log(this.baseUrl(),"/",phoneNumberId,"/messages",
+      console.log(`${this.baseUrl()}/${phoneNumberId}/messages`,
         {
           method: "POST",
           headers: {
@@ -67,7 +67,7 @@ class WhatsAppService {
         });
       
       const res = await fetch(
-        this.baseUrl(),"/",phoneNumberId,"/messages",
+        `${this.baseUrl()}/${phoneNumberId}/messages`,
         {
           method: "POST",
           headers: {
