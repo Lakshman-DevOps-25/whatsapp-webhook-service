@@ -26,9 +26,9 @@ class WhatsAppService {
     console.log("Token prefix:", fresh.accessToken.substring(0, 20));
     console.log("Token length:", fresh.accessToken.length);
     
-    // return { token: fresh.accessToken, phoneNumberId: fresh.phoneNumberId };
-    return { token: "EAAUZC81FIwVsBSNdgscuWTsQMZAgFfopMXvCHTOHvIRJzYmSCAZCPRoqRgty6JfnvWjO5dHM3ZA2AUX5LDC1kt9hOGmsOb5TAxZCqIXX2F40JxrWk1zDylVQ8ZBJZCavfZBriQqQrxX4V6JKlZAYn7kxUZCMYbMKZA0ZC1ZCsSjOkmh1ocAAZCGzksdUh9hZBrcQuXRwU1shcnfETkHlbD5ZBYFSDYUbRpqsmyeNPV1eMZBpUoGZA9sbZCXBQhvoXaatc9pJe9n1Icqv4HugtB7VApuq0RSQ4WSiI2B", 
-              phoneNumberId: "1277264628801939" };
+    return { token: fresh.accessToken, phoneNumberId: fresh.phoneNumberId };
+    //return { token: "EAAUZC81FIwVsBSNdgscuWTsQMZAgFfopMXvCHTOHvIRJzYmSCAZCPRoqRgty6JfnvWjO5dHM3ZA2AUX5LDC1kt9hOGmsOb5TAxZCqIXX2F40JxrWk1zDylVQ8ZBJZCavfZBriQqQrxX4V6JKlZAYn7kxUZCMYbMKZA0ZC1ZCsSjOkmh1ocAAZCGzksdUh9hZBrcQuXRwU1shcnfETkHlbD5ZBYFSDYUbRpqsmyeNPV1eMZBpUoGZA9sbZCXBQhvoXaatc9pJe9n1Icqv4HugtB7VApuq0RSQ4WSiI2B", 
+    //          phoneNumberId: "1277264628801939" };
   }
 
   // Send a plain text message. Returns the WhatsApp API response.
@@ -46,7 +46,7 @@ class WhatsAppService {
         to: "918331882058",
         type: "text",
         text: {
-          body: "Hello from Render"
+          body: `${body}`
         }
       };
       
@@ -56,7 +56,7 @@ class WhatsAppService {
     
       console.log("Whatsapp URL: ", `${this.baseUrl()}/${phoneNumberId}/messages`);
 
-      console.log("https://graph.facebook.com/v25.0/1277264628801939/messages",
+      console.log(this.baseUrl(),"/",phoneNumberId,"/messages",
         {
           method: "POST",
           headers: {
@@ -67,7 +67,7 @@ class WhatsAppService {
         });
       
       const res = await fetch(
-        "https://graph.facebook.com/v25.0/1277264628801939/messages",
+        this.baseUrl(),"/",phoneNumberId,"/messages",
         {
           method: "POST",
           headers: {
